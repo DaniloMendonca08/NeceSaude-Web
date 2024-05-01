@@ -129,10 +129,10 @@ export default function Cadastro() {
 
             <Input 
             key="senha"
-            label = "Senha"
+            label = "Senha (no mínimo 8 dígitos)"
             name = "senha"
             labelPlacement="outside"
-            type="text"
+            type="password"
             onChange={handleSenha}
             value={senha}
             required

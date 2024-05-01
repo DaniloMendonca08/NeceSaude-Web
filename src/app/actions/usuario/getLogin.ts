@@ -1,16 +1,8 @@
 "use server"
 
-export async function createUser(data: Usuario) {
-    const options = {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-  
+export async function getLogin(email:string, senha:string) {
     try {
-      const resp = await fetch(`${process.env.API_BASE_URL}/usuario/cadastro`, options);
+      const resp = await fetch(`${process.env.API_BASE_URL}/${email}/${senha}`);
   
       if (resp.ok) {
         const result = await resp.json(); 
@@ -27,4 +19,3 @@ export async function createUser(data: Usuario) {
       return { success: false, status: 500, message: "Erro ao conectar ao servidor." }; 
     }
   }
-  

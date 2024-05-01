@@ -4,9 +4,22 @@ import { Input } from "@nextui-org/react";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import { useRouter } from "next/navigation";
+import { getLogin } from "./actions/usuario/getLogin";
+import { useState } from "react";
 
 
-export default function Home() {
+export default async function Home() {
+
+  const [email, setEmail] = useState("")
+  const [senha, setSenha] = useState("")
+
+  const handleEmail = (event: { target: { value: SetStateAction<string>; }; }) => {
+    setEmail(event.target.value)
+  }
+
+  const handleSenha = (event: { target: { value: SetStateAction<string>; }; }) => {
+    setSenha(event.target.value)
+  }
 
   const router = useRouter()
 
@@ -16,6 +29,13 @@ export default function Home() {
 
   const handleRegister = () => {
     router.push("/cadastro")
+  }
+
+  const handleLogin = async () => {
+    const login = await getLogin();
+    if (login.success == true) {
+      router.push("/dashboard")
+    }
   }
 
   return (
@@ -28,6 +48,8 @@ export default function Home() {
         label = "Email"
         name = "email"
         labelPlacement="outside"
+        value={email}
+        onChange={handleEmail}
         />
 
         <Input 
@@ -35,11 +57,13 @@ export default function Home() {
         label = "Senha"
         name = "senha"
         labelPlacement="outside"
+        value={senha}
+        onChange={handleSenha}
         />
       </div>
 
       <div className="w-1/6 flex flex-col gap-6 justify-center items-center my-20 mx-auto p-10 rounded-lg text-center">
-      <button className="bg-custom-blue py-2 px-4 rounded-md">Entrar</button>
+      <button className="bg-custom-blue py-2 px-4 rounded-md" onClick={handleLogin}>Entrar</button>
 
       <h2 className="text-custom-blue py-2 px-4 rounded-md">Esqueceu sua senha?</h2>
       <button className="bg-custom-blue py-2 px-4 rounded-md" onClick={handleChangeData}>Alterar meus dados</button>
